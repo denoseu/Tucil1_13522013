@@ -95,10 +95,10 @@ if bobot_hadiah_max != 0:
 
     hasil = input("Apakah ingin menyimpan solusi? (y/n) ")
     if hasil == 'y':
-        write_ada_solusi(index, cari_sequences, cari_coordinates, bobot_hadiah_max, execution_time)
-        print("Solusi telah disimpan dalam file solusi.txt!")
+        filename = write_ada_solusi(index, cari_sequences, cari_coordinates, bobot_hadiah_max, execution_time)
+        print("Solusi telah disimpan dalam file " + filename + ".txt!")
 else:
     hasil = input("Apakah ingin menyimpan solusi? (y/n) ")
     if hasil == 'y':
         write_no_solusi(bobot_hadiah_max, execution_time)
-        print("Solusi telah disimpan dalam file solusi.txt!")
+        print("Solusi telah disimpan dalam file " + filename + ".txt!")

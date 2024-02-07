@@ -31,7 +31,8 @@ def write_array(sequences, filename):
 
 #*** write file solusi ketika bobot hadiah != 0 ***#
 def write_ada_solusi(index, cari_sequences, cari_coordinates, bobot_hadiah_max, execution_time):
-    with open('solusi.txt', 'w') as file:
+    filename = input("Masukkan nama file solusi: ")
+    with open('test/' + filename + '.txt', 'w') as file:
         file.write("#**** Cyberpunk 2077 Breach Protocol Solution ****# \n")
         file.write("Bobot Hadiah: " + str(bobot_hadiah_max) + '\n')
         file.write("Sekuens: ")
@@ -42,11 +43,14 @@ def write_ada_solusi(index, cari_sequences, cari_coordinates, bobot_hadiah_max, 
         for coordinates in cari_coordinates[index-1]:
             file.write(str(coordinates) + '\n')
         file.write("Waktu eksekusi: " + str(execution_time) + " ms")
+    return filename
 
 #*** write file solusi ketika bobot hadiah = 0 ***#
 def write_no_solusi(bobot_hadiah_max, execution_time):
-    with open('solusi.txt', 'w') as file:
+    filename = input("Masukkan nama file solusi: ")
+    with open('test/' + filename + '.txt', 'w') as file:
         file.write("#**** Cyberpunk 2077 Breach Protocol Solution ****# \n")
         file.write("Bobot Hadiah: " + str(bobot_hadiah_max) + '\n')
         file.write("Tidak ada sekuens yang memenuhi. \n")
         file.write("Waktu eksekusi: " + str(execution_time) + " ms")
+    return filename

@@ -9,4 +9,4 @@ Koordinat:
 (6, 5)
 (6, 4)
 (5, 4)
-Waktu eksekusi: 149.02591705322266 ms
+Waktu eksekusi: 138.87786865234375 ms
