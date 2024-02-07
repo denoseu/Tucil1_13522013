@@ -47,7 +47,7 @@ def keyboard_input():
 
     sequence_rewards = []
     for c in range(int(number_of_sequences)):
-        sequence_rewards.append(random.randint(1, 50))
+        sequence_rewards.append(random.randint(8, 80))
 
     return jumlah_token_unik, token, buffer_size, matrix_width, matrix_height, matrix, number_of_sequences, ukuran_maksimal_sekuens, sequences, sequence_rewards
 
