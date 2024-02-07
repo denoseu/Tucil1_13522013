@@ -19,38 +19,37 @@ def read_file(filename):
 #*** read from keyboard ***#
 def keyboard_input():
     jumlah_token_unik = input("Jumlah token unik: ")
-    token = []
-    for i in range(int(jumlah_token_unik)):
-        token.append(input())
+    token_input = input("Masukkan token: ")
+    token = token_input.split()
 
-    ukuran_buffer = input("Ukuran buffer: ")
+    buffer_size = int(input("Ukuran buffer: "))
 
     ukuran_matriks = input("Ukuran matriks: ")
     row_mtx, col_mtx = ukuran_matriks.split()
-    row = int(row_mtx)
-    col = int(col_mtx)
+    matrix_width = int(col_mtx)
+    matrix_height = int(row_mtx)
 
-    matriks = [['' for i in range(col)] for j in range(row)]
-    for j in range (row):
-        for k in range (col):
-            matriks[j][k] = random.choice(token)
+    matrix = [['' for i in range(matrix_width)] for j in range(matrix_height)]
+    for j in range (matrix_height):
+        for k in range (matrix_width):
+            matrix[j][k] = random.choice(token)
 
-    jumlah_sekuens = input("Jumlah sekuens: ")
-    ukuran_maksimal_sekuens = input("Ukuran maksimal sekuens: ")
+    number_of_sequences = int(input("Jumlah sekuens: "))
+    ukuran_maksimal_sekuens = int(input("Ukuran maksimal sekuens: "))
 
     sequences = []
-    for a in range(int(jumlah_sekuens)):
+    for a in range(int(number_of_sequences)):
         ukuran = random.randint(2, int(ukuran_maksimal_sekuens))
         sequence = []
         for b in range(ukuran):
             sequence.append(random.choice(token))
         sequences.append(sequence)
 
-    hadiah = []
-    for c in range(int(jumlah_sekuens)):
-        hadiah.append(random.randint(1, 50))
+    sequence_rewards = []
+    for c in range(int(number_of_sequences)):
+        sequence_rewards.append(random.randint(1, 50))
 
-    return jumlah_token_unik, token, ukuran_buffer, col, row, matriks, jumlah_sekuens, ukuran_maksimal_sekuens, sequences, hadiah
+    return jumlah_token_unik, token, buffer_size, matrix_width, matrix_height, matrix, number_of_sequences, ukuran_maksimal_sekuens, sequences, sequence_rewards
 
 #*** write array of array ke file txt ***#
 def write_to_file(sequences, filename):
