@@ -25,7 +25,7 @@ def keyboard_input():
     buffer_size = int(input("Ukuran buffer: "))
 
     ukuran_matriks = input("Ukuran matriks: ")
-    row_mtx, col_mtx = ukuran_matriks.split()
+    col_mtx, row_mtx = ukuran_matriks.split()
     matrix_width = int(col_mtx)
     matrix_height = int(row_mtx)
 

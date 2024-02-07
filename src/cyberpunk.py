@@ -58,31 +58,31 @@ def hadiah(matrix, sequences, sequence_rewards):
     return total_rewards
 
 #*** MAIN ***#
-# filename = "input.txt"
-# buffer_size, matrix_width, matrix_height, matrix, number_of_sequences, sequences, sequence_rewards = read_file(filename)
+filename = "input2.txt"
+buffer_size, matrix_width, matrix_height, matrix, number_of_sequences, sequences, sequence_rewards = read_file(filename)
 
-jumlah_token_unik, token, buffer_size, matrix_width, matrix_height, matrix, number_of_sequences, ukuran_maksimal_sekuens, sequences, sequence_rewards = keyboard_input()
+# jumlah_token_unik, token, buffer_size, matrix_width, matrix_height, matrix, number_of_sequences, ukuran_maksimal_sekuens, sequences, sequence_rewards = keyboard_input()
 
-print("jumlah token unik:", jumlah_token_unik)
-print("token:", token)
-print("buffer:", buffer_size)
-print("matrix height:", matrix_height)
-print("matrix width:", matrix_width)
-print("matrix:")
-for i in range(matrix_height):
-    for j in range(matrix_width):
-        print(matrix[i][j], end=' ')
-    print()
-print("number of seq:", number_of_sequences)
+# print("jumlah token unik:", jumlah_token_unik)
+# print("token:", token)
+# print("buffer:", buffer_size)
+# print("matrix height:", matrix_height)
+# print("matrix width:", matrix_width)
+# print("matrix:")
+# for i in range(matrix_height):
+#     for j in range(matrix_width):
+#         print(matrix[i][j], end=' ')
+#     print()
+# print("number of seq:", number_of_sequences)
 
-for i in range((number_of_sequences)):
-    sequence = sequences[i]
-    print(sequence)
-    # print("seq {}: ".format(i + 1), end='')
-    # for j in range(len(sequence)):
-    #     print(sequence[j], end=' ')
-    # print()
-    print("reward:", sequence_rewards[i])
+# for i in range((number_of_sequences)):
+#     sequence = sequences[i]
+#     print(sequence)
+#     # print("seq {}: ".format(i + 1), end='')
+#     # for j in range(len(sequence)):
+#     #     print(sequence[j], end=' ')
+#     # print()
+#     print("reward:", sequence_rewards[i])
 
 start = time.time()
 
