@@ -58,7 +58,13 @@ def hadiah(matrix, sequences, sequence_rewards):
     return total_rewards
 
 #*** MAIN ***#
-print("Selamat datang di Cyberpunk 2077 Breach Protocol!")
+print("                                             Selamat datang di")
+print("")
+print("█▀▀ █▄█ █▄▄ █▀▀ █▀█ █▀█ █░█ █▄░█ █▄▀   ▀█ █▀█ ▀▀█ ▀▀█   █▄▄ █▀█ █▀▀ ▄▀█ █▀▀ █░█   █▀█ █▀█ █▀█ ▀█▀ █▀█ █▀▀ █▀█ █░░ █")
+print("█▄▄ ░█░ █▄█ ██▄ █▀▄ █▀▀ █▄█ █░▀█ █░█   █▄ █▄█ ░░█ ░░█   █▄█ █▀▄ ██▄ █▀█ █▄▄ █▀█   █▀▀ █▀▄ █▄█ ░█░ █▄█ █▄▄ █▄█ █▄▄ ▄")
+print("")
+print("oleh Denise Felicia Tiowanni - 13522013")
+print("")
 print("Jenis masukan: ")
 print("1. File (.txt)")
 print("2. Keyboard")
