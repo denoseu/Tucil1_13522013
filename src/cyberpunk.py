@@ -105,7 +105,7 @@ index = find_index(total_hadiah, bobot_hadiah_max)
 
 end = time.time()
 
-execution_time = ((end - start)*1000)
+execution_time = round(((end - start)*1000), 2)
 
 write_to_file(cari_coordinates, 'output_coordinate.txt')
 write_to_file(cari_sequences, 'output.txt')

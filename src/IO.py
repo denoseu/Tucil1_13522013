@@ -80,6 +80,7 @@ def write_ada_solusi(index, cari_sequences, cari_coordinates, bobot_hadiah_max, 
         for coordinates in cari_coordinates[index-1]:
             file.write(str(coordinates) + '\n')
         file.write("Waktu eksekusi: " + str(execution_time) + " ms")
+        file.write("#*************************************************# \n")
     return filename
 
 #*** write file solusi ketika bobot hadiah = 0 ***#
@@ -90,4 +91,5 @@ def write_no_solusi(bobot_hadiah_max, execution_time):
         file.write("Bobot Hadiah: " + str(bobot_hadiah_max) + '\n')
         file.write("Tidak ada sekuens yang memenuhi. \n")
         file.write("Waktu eksekusi: " + str(execution_time) + " ms")
+        file.write("#*************************************************# \n")
     return filename
