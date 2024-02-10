@@ -15,16 +15,16 @@ pada permainan Cyberpunk 2077. Komponen pada permainan ini antara lain adalah to
 ## Struktur Program <a href="structure"></a>
 ![Example screenshot](./img/screenshot.png)
 
-│
-├───bin
-│   ├───build
-│   ├───dist
-│   └───cyberpunk.spec
-│
-├───doc
-│
-├───src                           
-│   ├───cyberpunk.py          
+│  
+├───bin  
+│   ├───build  
+│   ├───dist  
+│   └───cyberpunk.spec  
+│  
+├───doc  
+│  
+├───src                             
+│   ├───cyberpunk.py            
 │   ├───GUI.py  
 │   ├───helper.py
 │   └───io.py    
