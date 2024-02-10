@@ -21,7 +21,8 @@ pada permainan Cyberpunk 2077. Komponen pada permainan ini antara lain adalah to
     ```
     git clone https://github.com/denoseu/Tucil1_13522013
     ```
-2. Pindah ke direktori *bin* dengan `cd src/bin`
-3. Pindah ke direktori dimana file executable berada dengan <code>cd dist</code>
-4. Run executable file dengan <code>./cyberpunk</code>
-5. Klik enter/return.
+2. Buka folder repository pada terminal.
+3. Pindah ke direktori *bin* dengan `cd bin`
+4. Pindah ke direktori dimana file executable berada dengan <code>cd dist</code>
+5. Run executable file dengan <code>./cyberpunk</code>
+6. Klik enter/return.
