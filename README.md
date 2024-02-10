@@ -15,6 +15,30 @@ pada permainan Cyberpunk 2077. Komponen pada permainan ini antara lain adalah to
 ## Struktur Program <a href="structure"></a>
 ![Example screenshot](./img/screenshot.png)
 
+│
+├───bin
+│   ├───build
+│   ├───dist
+│   └───cyberpunk.spec
+│
+├───doc
+│
+├───src                           
+│   ├───cyberpunk.py          
+│   ├───GUI.py  
+│   ├───helper.py
+│   └───io.py    
+│
+├───test      
+│   ├───1.txt           
+│   ├───2.txt    
+│   ├───3.txt
+│   ├───4.txt 
+│   ├───5.txt                    
+│   └───6.txt     
+│   
+└───README.md                        
+
 ## How to Run <a href="setup"></a>
 # Catatan: file executable di run pada sistem MacOS.
 1. Clone repository ini dengan 
