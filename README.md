@@ -1,18 +1,12 @@
 # Tucil 1 Strategi Algoritma (IF2211)
 ## Denise Felicia Tiowanni: 13522013
 
-## Table of Contents
-* [Deskripsi Program](#cyberpunk-2077)
-* [Struktur Program](#structure)
-* [How to Run](#setup)
-
-
-## Cyberpunk 2077 Breach Protocol <a href="cyberpunk-2077"></a>
+## Cyberpunk 2077 Breach Protocol
 Cyberpunk 2077 Breach Protocol adalah minigame meretas pada permainan video Cyberpunk 2077. 
 Minigame ini merupakan simulasi peretasan jaringan local dari ICE (Intrusion Countermeasures Electronics) 
 pada permainan Cyberpunk 2077. Komponen pada permainan ini antara lain adalah token, matriks, sekuens, dan bufffer.
 
-## Struktur Program <a href="structure"></a>
+## Struktur Program
 
 ```
 ├── bin
@@ -38,10 +32,8 @@ pada permainan Cyberpunk 2077. Komponen pada permainan ini antara lain adalah to
 │
 └── README.md
 ```
-         
-               
 
-## How to Run <a href="setup"></a>
+## How to Run Executable File
 ### Catatan: file executable di run pada sistem MacOS.
 1. Clone repository ini dengan 
     ```
@@ -52,3 +44,5 @@ pada permainan Cyberpunk 2077. Komponen pada permainan ini antara lain adalah to
 4. Pindah ke direktori dimana file executable berada dengan <code>cd dist</code>
 5. Run executable file dengan <code>./cyberpunk</code>
 6. Klik enter/return.
+
+## How to Use
