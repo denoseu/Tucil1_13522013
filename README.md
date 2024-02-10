@@ -15,32 +15,13 @@ pada permainan Cyberpunk 2077. Komponen pada permainan ini antara lain adalah to
 ## Struktur Program <a href="structure"></a>
 ![Example screenshot](./img/screenshot.png)
 
-
 ## How to Run <a href="setup"></a>
+# Catatan: file executable di run pada sistem MacOS.
 1. Clone repository ini dengan 
     ```
-    git clone https://github.com/NopalAul/Algeo02-22013
+    git clone https://github.com/denoseu/Tucil1_13522013
     ```
-2. Di dalam direktori tersebut, buat virtual environment dengan
-    ```
-    python -m venv myenv
-    ```
-3. Aktivasi virtual environment dengan
-    - Windows:
-        ```
-        myenv\Scripts\activate
-        ```
-    - macOS & Linux:
-        ```
-        source myenv/bin/activate
-        ```
-4. Install dahulu requierements dengan melakukan 
-    ```
-    pip install -r requirements.txt
-    ```
-5. Pindah ke direktori *website* dengan `cd src/website`
-6. Install requierements website dengan command <code>npm install</code>
-7. Jalankan website dengan <code>npm start</code>
-8. Buka terminal baru, aktivasi lagi virtual environment, pindah ke direktori *backend* dengan `cd src/backend`
-9. Jalankan file python dengan <code>python app.py</code>
-10. Buka <code>http://localhost:3000</code> pada peramban dan website sudah dapat digunakan
+2. Pindah ke direktori *bin* dengan `cd src/bin`
+3. Pindah ke direktori dimana file executable berada dengan <code>cd dist</code>
+4. Run executable file dengan <code>./cyberpunk</code>
+5. Klik enter/return.
