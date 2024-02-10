@@ -13,7 +13,7 @@ Minigame ini merupakan simulasi peretasan jaringan local dari ICE (Intrusion Cou
 pada permainan Cyberpunk 2077. Komponen pada permainan ini antara lain adalah token, matriks, sekuens, dan bufffer.
 
 ## Struktur Program <a href="structure"></a>
-![Example screenshot](./img/screenshot.png)
+
 │  
 ├───bin  
 │   ├───build  
