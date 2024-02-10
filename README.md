@@ -21,7 +21,7 @@ pada permainan Cyberpunk 2077. Komponen pada permainan ini antara lain adalah to
 │   └───cyberpunk.spec  
 │  
 ├───doc  
-│   (Documentation files)
+│  
 │  
 ├───src                             
 │   ├───cyberpunk.py  
