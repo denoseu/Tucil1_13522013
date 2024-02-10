@@ -42,7 +42,7 @@ pada permainan Cyberpunk 2077. Komponen pada permainan ini antara lain adalah to
                
 
 ## How to Run <a href="setup"></a>
-# Catatan: file executable di run pada sistem MacOS.
+### Catatan: file executable di run pada sistem MacOS.
 1. Clone repository ini dengan 
     ```
     git clone https://github.com/denoseu/Tucil1_13522013
