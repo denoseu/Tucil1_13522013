@@ -14,7 +14,7 @@ pada permainan Cyberpunk 2077. Komponen pada permainan ini antara lain adalah to
 
 ## Struktur Program <a href="structure"></a>
 
-.
+```
 ├── bin
 │   ├── build
 │   ├── dist
@@ -37,6 +37,7 @@ pada permainan Cyberpunk 2077. Komponen pada permainan ini antara lain adalah to
 │   └── 6.txt
 │
 └── README.md
+```
          
                
 
