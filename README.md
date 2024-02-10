@@ -14,30 +14,30 @@ pada permainan Cyberpunk 2077. Komponen pada permainan ini antara lain adalah to
 
 ## Struktur Program <a href="structure"></a>
 
-│  
-├───bin  
-│   ├───build  
-│   ├───dist  
-│   └───cyberpunk.spec  
-│  
-├───doc  
-│  
-│  
-├───src                             
-│   ├───cyberpunk.py  
-│   ├───GUI.py  
-│   ├───helper.py  
-│   └───io.py   
+.
+├── bin
+│   ├── build
+│   ├── dist
+│   └── cyberpunk.spec
 │
-├───test      
-│   ├───1.txt  
-│   ├───2.txt   
-│   ├───3.txt    
-│   ├───4.txt   
-│   ├───5.txt  
-│   └───6.txt  
-│   
-└───README.md             
+├── doc
+│
+├── src
+│   ├── cyberpunk.py
+│   ├── GUI.py
+│   ├── helper.py
+│   └── io.py
+│
+├── test
+│   ├── 1.txt
+│   ├── 2.txt
+│   ├── 3.txt
+│   ├── 4.txt
+│   ├── 5.txt
+│   └── 6.txt
+│
+└── README.md
+         
                
 
 ## How to Run <a href="setup"></a>
