@@ -8,8 +8,9 @@
 
 
 ## Cyberpunk 2077 Breach Protocol <a href="cyberpunk-2077"></a>
-Cyberpunk 2077 Breach Protocol adalah blablablabla.
-
+Cyberpunk 2077 Breach Protocol adalah minigame meretas pada permainan video Cyberpunk 2077. 
+Minigame ini merupakan simulasi peretasan jaringan local dari ICE (Intrusion Countermeasures Electronics) 
+pada permainan Cyberpunk 2077. Komponen pada permainan ini antara lain adalah token, matriks, sekuens, dan bufffer.
 
 ## Struktur Program <a href="structure"></a>
 ![Example screenshot](./img/screenshot.png)

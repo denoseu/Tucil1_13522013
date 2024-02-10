@@ -107,9 +107,9 @@ end = time.time()
 
 execution_time = round(((end - start)*1000), 2)
 
-write_to_file(cari_coordinates, 'output_coordinate.txt')
-write_to_file(cari_sequences, 'output.txt')
-write_array(total_hadiah, 'output2.txt')
+# write_to_file(cari_coordinates, 'output_coordinate.txt')
+# write_to_file(cari_sequences, 'output.txt')
+# write_array(total_hadiah, 'output2.txt')
 
 
 if bobot_hadiah_max != 0:
