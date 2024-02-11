@@ -50,7 +50,7 @@ class BreachProtocolSolverApp:
             index = self.find_index(total_hadiah, bobot_hadiah_max)
             execution_time = time.time() - start_time
 
-            self.display_result(bobot_hadiah_max, cari_sequences[index-1], cari_coordinates[index-1], execution_time)
+            self.display_result(matrix, bobot_hadiah_max, cari_sequences[index-1], cari_coordinates[index-1], execution_time)
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred: {e}")
 
@@ -134,12 +134,41 @@ class BreachProtocolSolverApp:
                 return i + 1
         return -1
 
-    def display_result(self, bobot_hadiah_max, cari_sequences, cari_coordinates, execution_time):
+    def display_result(self, matrix, bobot_hadiah_max, cari_sequences, cari_coordinates, execution_time):
         result_text = f"Bobot Hadiah: {bobot_hadiah_max}\n"
         result_text += "Sekuens: " + ' '.join(cari_sequences) + "\n"
         result_text += "Koordinat:\n" + '\n'.join(map(str, cari_coordinates)) + "\n"
         result_text += f"Waktu eksekusi: {execution_time*1000} ms"
         self.label_output.config(text=result_text)
+
+        # Display matrix layout with highlighted coordinates
+        matrix_layout = tk.LabelFrame(self.root, text="Matrix")
+        matrix_layout.grid(row=5, column=0, columnspan=3, padx=10, pady=10, sticky="we")
+
+        matrix_canvas = tk.Canvas(matrix_layout, width=200, height=200)  # Adjust dimensions as needed
+        matrix_canvas.grid(row=0, column=0, sticky="nsew")  # Expand to fill the frame
+        matrix_canvas.pack()
+
+        # Assuming matrix is stored in a variable named 'matrix'
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                cell_text = matrix[i][j]
+                x0, y0 = j * 30, i * 30  # Adjust spacing as needed
+                x1, y1 = x0 + 30, y0 + 30
+                cell_id = matrix_canvas.create_rectangle(x0, y0, x1, y1, fill="white")  # Adjust color as needed
+                matrix_canvas.create_text((x0 + x1) / 2, (y0 + y1) / 2, text=cell_text)
+
+        # Highlight coordinates
+        for coord in cari_coordinates:
+            x, y = coord
+            x -= 1  # Adjust to 0-based indexing
+            y -= 1
+            x0, y0 = x * 30, y * 30  # Adjust spacing as needed
+            x1, y1 = x0 + 30, y0 + 30
+            highlight_id = matrix_canvas.create_rectangle(x0, y0, x1, y1, fill="pink")  # Adjust highlight color as needed
+            cell_text = matrix[y][x]
+            matrix_canvas.create_text((x0 + x1) / 2, (y0 + y1) / 2, text=cell_text, fill="black")
+
 
     def create_widgets(self):
         self.label_intro = tk.Label(self.root, text="Welcome to Cyberpunk 2077 Breach Protocol Solver", font=("Helvetica", 16))
@@ -238,7 +267,36 @@ class BreachProtocolSolverApp:
             result_text += f"Waktu eksekusi: {execution_time*1000} ms"
 
             self.label_output.config(text=result_text)
-            
+
+            # Display matrix layout with highlighted coordinates
+            matrix_layout = tk.LabelFrame(self.root, text="Matrix")
+            matrix_layout.grid(row=5, column=0, columnspan=3, padx=10, pady=10, sticky="we")
+
+            matrix_canvas = tk.Canvas(matrix_layout, width=200, height=200)  # Adjust dimensions as needed
+            matrix_canvas.grid(row=0, column=0, sticky="nsew")  # Expand to fill the frame
+            matrix_canvas.pack()
+
+            # Assuming matrix is stored in a variable named 'matrix'
+            for i in range(len(matrix)):
+                for j in range(len(matrix[0])):
+                    cell_text = matrix[i][j]
+                    x0, y0 = j * 30, i * 30  # Adjust spacing as needed
+                    x1, y1 = x0 + 30, y0 + 30
+                    cell_id = matrix_canvas.create_rectangle(x0, y0, x1, y1, fill="white")  # Adjust color as needed
+                    matrix_canvas.create_text((x0 + x1) / 2, (y0 + y1) / 2, text=cell_text)
+
+            # Highlight coordinates
+            for coord in coordinates:
+                x, y = coord
+                x -= 1  # Adjust to 0-based indexing
+                y -= 1
+                x0, y0 = x * 30, y * 30  # Adjust spacing as needed
+                x1, y1 = x0 + 30, y0 + 30
+                highlight_id = matrix_canvas.create_rectangle(x0, y0, x1, y1, fill="pink")  # Adjust highlight color as needed
+                cell_text = matrix[y][x]
+                matrix_canvas.create_text((x0 + x1) / 2, (y0 + y1) / 2, text=cell_text, fill="black")
+
+                
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred: {e}")
 
