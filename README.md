@@ -17,6 +17,7 @@ pada permainan Cyberpunk 2077. Komponen pada permainan ini antara lain adalah to
 ├── doc
 │
 ├── src
+│   ├── assets
 │   ├── cyberpunk.py
 │   ├── GUI.py
 │   ├── helper.py
@@ -34,7 +35,8 @@ pada permainan Cyberpunk 2077. Komponen pada permainan ini antara lain adalah to
 ```
 
 ## How to Run Executable File
-### Catatan: file executable di run pada sistem MacOS.
+### Catatan: file executable di run pada sistem MacOS
+### File executable hanya untuk program secara Command-Line
 1. Clone repository ini dengan 
     ```
     git clone https://github.com/denoseu/Tucil1_13522013
@@ -45,4 +47,18 @@ pada permainan Cyberpunk 2077. Komponen pada permainan ini antara lain adalah to
 5. Run executable file dengan <code>./cyberpunk</code>
 6. Klik enter/return.
 
+## How to Run GUI
+1. Clone repository ini dengan 
+    ```
+    git clone https://github.com/denoseu/Tucil1_13522013
+    ```
+2. Buka folder repository pada terminal.
+3. Pindah ke direktori *src* dengan `cd src`
+4. Run GUI file dengan <code>python GUI.py</code>
+5. Klik enter/return.
+
 ## How to Use
+1. Pilih jenis input yang diinginkan (file/keyboard).
+2. Masukkan input sesuai jenis yang dipilih.
+3. Tunggu hasil hingga keluar.
+4. Akan diberikan opsi apakah ingin menyimpan jawaban atau tidak, pilih yang diinginkan.
