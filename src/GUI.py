@@ -145,29 +145,34 @@ class BreachProtocolSolverApp:
         matrix_layout = tk.LabelFrame(self.root, text="Matrix")
         matrix_layout.grid(row=5, column=0, columnspan=3, padx=10, pady=10, sticky="we")
 
-        matrix_canvas = tk.Canvas(matrix_layout, width=200, height=200)  # Adjust dimensions as needed
-        matrix_canvas.grid(row=0, column=0, sticky="nsew")  # Expand to fill the frame
-        matrix_canvas.pack()
+        frame = tk.Frame(matrix_layout)
+        frame.grid(row=0, column=0, sticky="nsew")
 
-        # Assuming matrix is stored in a variable named 'matrix'
+        canvas = tk.Canvas(frame, width=400, height=300)  # Adjust dimensions as needed
+        canvas.grid(row=0, column=0, sticky="nsew")
+
+        scrollbar = tk.Scrollbar(frame, orient="vertical", command=canvas.yview)
+        scrollbar.grid(row=0, column=1, sticky="ns")
+        canvas.config(yscrollcommand=scrollbar.set)
+
+        # Display matrix cells
         for i in range(len(matrix)):
             for j in range(len(matrix[0])):
                 cell_text = matrix[i][j]
-                x0, y0 = j * 30, i * 30  # Adjust spacing as needed
-                x1, y1 = x0 + 30, y0 + 30
-                cell_id = matrix_canvas.create_rectangle(x0, y0, x1, y1, fill="white")  # Adjust color as needed
-                matrix_canvas.create_text((x0 + x1) / 2, (y0 + y1) / 2, text=cell_text)
+                label = tk.Label(canvas, text=cell_text, padx=10, pady=10, borderwidth=1, relief="solid")
+                label.grid(row=i, column=j)
 
         # Highlight coordinates
         for coord in cari_coordinates:
             x, y = coord
             x -= 1  # Adjust to 0-based indexing
             y -= 1
-            x0, y0 = x * 30, y * 30  # Adjust spacing as needed
-            x1, y1 = x0 + 30, y0 + 30
-            highlight_id = matrix_canvas.create_rectangle(x0, y0, x1, y1, fill="pink")  # Adjust highlight color as needed
-            cell_text = matrix[y][x]
-            matrix_canvas.create_text((x0 + x1) / 2, (y0 + y1) / 2, text=cell_text, fill="black")
+            cell = canvas.grid_slaves(row=y, column=x)[0]
+            cell.config(bg="pink")
+
+        canvas.update_idletasks()
+        canvas.config(scrollregion=canvas.bbox("all"))
+
 
 
     def create_widgets(self):
@@ -272,33 +277,44 @@ class BreachProtocolSolverApp:
             matrix_layout = tk.LabelFrame(self.root, text="Matrix")
             matrix_layout.grid(row=5, column=0, columnspan=3, padx=10, pady=10, sticky="we")
 
-            matrix_canvas = tk.Canvas(matrix_layout, width=200, height=200)  # Adjust dimensions as needed
-            matrix_canvas.grid(row=0, column=0, sticky="nsew")  # Expand to fill the frame
-            matrix_canvas.pack()
+            frame = tk.Frame(matrix_layout)
+            frame.grid(row=0, column=0, sticky="nsew")
 
-            # Assuming matrix is stored in a variable named 'matrix'
+            canvas = tk.Canvas(frame)  # Remove width and height parameters
+            canvas.grid(row=0, column=0, sticky="nsew")
+
+            # Add a frame to contain the matrix cells
+            inner_frame = tk.Frame(canvas)
+            canvas.create_window((0, 0), window=inner_frame, anchor="nw")
+
+            # Display matrix cells
             for i in range(len(matrix)):
                 for j in range(len(matrix[0])):
                     cell_text = matrix[i][j]
-                    x0, y0 = j * 30, i * 30  # Adjust spacing as needed
-                    x1, y1 = x0 + 30, y0 + 30
-                    cell_id = matrix_canvas.create_rectangle(x0, y0, x1, y1, fill="white")  # Adjust color as needed
-                    matrix_canvas.create_text((x0 + x1) / 2, (y0 + y1) / 2, text=cell_text)
+                    label = tk.Label(inner_frame, text=cell_text, padx=10, pady=10, borderwidth=1, relief="solid")
+                    label.grid(row=i, column=j)
 
             # Highlight coordinates
             for coord in coordinates:
                 x, y = coord
                 x -= 1  # Adjust to 0-based indexing
                 y -= 1
-                x0, y0 = x * 30, y * 30  # Adjust spacing as needed
-                x1, y1 = x0 + 30, y0 + 30
-                highlight_id = matrix_canvas.create_rectangle(x0, y0, x1, y1, fill="pink")  # Adjust highlight color as needed
-                cell_text = matrix[y][x]
-                matrix_canvas.create_text((x0 + x1) / 2, (y0 + y1) / 2, text=cell_text, fill="black")
+                cell = inner_frame.grid_slaves(row=y, column=x)[0]
+                cell.config(bg="pink")
 
+
+            # Add scrollbar
+            scrollbar = tk.Scrollbar(frame, orient="vertical", command=canvas.yview)
+            scrollbar.grid(row=0, column=1, sticky="ns")
+            canvas.config(yscrollcommand=scrollbar.set)
+
+            # Update the scroll region
+            inner_frame.update_idletasks()
+            canvas.config(scrollregion=canvas.bbox("all"))
                 
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred: {e}")
+
 
 def main():
     root = tk.Tk()
