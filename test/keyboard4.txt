@@ -1,13 +1,11 @@
 #**** Cyberpunk 2077 Breach Protocol Solution ****# 
-Bobot Hadiah: 50
-Sekuens: 7A BD 7A BD 1C BD 55 
+Bobot Hadiah: 167
+Sekuens: E8 E8 CD E8 AB 
 Koordinat: 
-(1, 1)
+(3, 1)
+(3, 2)
+(1, 2)
 (1, 4)
-(3, 4)
-(3, 5)
-(6, 5)
-(6, 4)
-(5, 4)
-Waktu eksekusi: 101.26 ms
+(2, 4)
+Waktu eksekusi: 2.36 ms
 #*************************************************# 
