@@ -1,75 +1,23 @@
 import tkinter as tk
-from tkinter import filedialog
-from tkinter import messagebox
-import time
-import random
+from tkinter import simpledialog, filedialog
+from PIL import Image, ImageTk, ImageDraw, ImageFont
+import random, time, os
 
-class BreachProtocolSolverApp:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Cyberpunk 2077 Breach Protocol Solver")
-        
-        self.create_widgets()
-        
-    def create_widgets(self):
-        self.label_intro = tk.Label(self.root, text="Welcome to Cyberpunk 2077 Breach Protocol Solver", font=("Helvetica", 16))
-        self.label_intro.grid(row=0, column=0, columnspan=2, padx=10, pady=10)
-        
-        self.label_input_type = tk.Label(self.root, text="Jenis masukan:")
-        self.label_input_type.grid(row=1, column=0, padx=10, pady=5, sticky="w")
-        
-        self.input_type = tk.StringVar()
-        self.input_type.set("file")
-        self.radio_file = tk.Radiobutton(self.root, text="File (.txt)", variable=self.input_type, value="file")
-        self.radio_file.grid(row=1, column=1, padx=10, pady=5, sticky="w")
-        self.radio_keyboard = tk.Radiobutton(self.root, text="Keyboard", variable=self.input_type, value="keyboard")
-        self.radio_keyboard.grid(row=1, column=2, padx=10, pady=5, sticky="w")
-        
-        self.button_solve = tk.Button(self.root, text="Solve", command=self.solve)
-        self.button_solve.grid(row=2, column=0, columnspan=2, padx=10, pady=10)
-        
-        self.label_output = tk.Label(self.root, text="")
-        self.label_output.grid(row=3, column=0, columnspan=2, padx=10, pady=5)
+class GUI(tk.Tk):
+    def max_array(array):
+        max = array[0]
+        for i in range(len(array)):
+            if array[i] > max:
+                max = array[i]
+        return max
 
-    def solve(self):
-        input_type = self.input_type.get()
-        if input_type == "file":
-            filename = filedialog.askopenfilename(filetypes=[("Text files", "*.txt")])
-            if filename:
-                self.solve_from_file(filename)
-        elif input_type == "keyboard":
-            self.solve_from_keyboard()
+    def find_index(array, value):
+        for i in range(len(array)):
+            if array[i] == value:
+                return i+1
+        return -1
 
-    def solve_from_file(self, filename):
-        try:
-            start_time = time.time()
-            buffer_size, matrix_width, matrix_height, matrix, number_of_sequences, sequences, sequence_rewards = self.read_file(filename)
-            cari_sequences, cari_coordinates = self.all_sequences(matrix, buffer_size)
-            total_hadiah = self.hadiah(cari_sequences, sequences, sequence_rewards)
-            bobot_hadiah_max = self.max_array(total_hadiah)
-            index = self.find_index(total_hadiah, bobot_hadiah_max)
-            execution_time = time.time() - start_time
-
-            self.display_result(matrix, bobot_hadiah_max, cari_sequences[index-1], cari_coordinates[index-1], execution_time)
-        except Exception as e:
-            messagebox.showerror("Error", f"An error occurred: {e}")
-
-    def read_file(self, filename):
-        with open(filename, 'r') as file:
-            buffer_size = int(file.readline().strip())
-            matrix_width, matrix_height = map(int, file.readline().split())
-            matrix = [list(file.readline().split()) for _ in range(matrix_height)]
-            number_of_sequences = int(file.readline().strip())
-            sequences = []
-            sequence_rewards = []
-
-            for _ in range(number_of_sequences):
-                sequences.append(file.readline().split())
-                sequence_rewards.append(int(file.readline().strip()))
-
-        return buffer_size, matrix_width, matrix_height, matrix, number_of_sequences, sequences, sequence_rewards
-
-    def all_sequences(self, matrix, buffer_size):
+    def all_sequences(matrix, buffer_size):
         def is_valid_move(row, col):
             return 0 <= row < len(matrix) and 0 <= col < len(matrix[0]) and (row, col) not in visited
 
@@ -102,7 +50,7 @@ class BreachProtocolSolverApp:
             explore(0, col_index, 0, True)
         return sequences, coordinates
 
-    def hadiah(self, matrix, sequences, sequence_rewards):
+    def hadiah(matrix, sequences, sequence_rewards):
         total_rewards = []
 
         for array in matrix:
@@ -121,205 +69,223 @@ class BreachProtocolSolverApp:
 
         return total_rewards
 
-    def max_array(self, array):
-        max_val = array[0]
-        for val in array:
-            if val > max_val:
-                max_val = val
-        return max_val
+    def calculate(self, buffer_value, matrix_width, matrix_height, matrix, no_of_sequences, sequences, sequence_rewards):
+        start = time.time()
+        cari_sequences, cari_coordinates = GUI.all_sequences(matrix, buffer_value)
+        rewards = GUI.hadiah(cari_sequences, sequences, sequence_rewards)
+        max_reward = GUI.max_array(rewards)
+        index = GUI.find_index(rewards, max_reward)
+        end = time.time()
+        execution_time = end - start
 
-    def find_index(self, array, value):
-        for i, val in enumerate(array):
-            if val == value:
-                return i + 1
-        return -1
+        
+        print("Matrix: ")
+        for i in range(matrix_height):
+            for j in range(matrix_width):
+                print(matrix[i][j], end=' ')
+            print()
+        print("Jumlah sekuens: ", no_of_sequences)
 
-    def display_result(self, matrix, bobot_hadiah_max, cari_sequences, cari_coordinates, execution_time):
-        result_text = f"Bobot Hadiah: {bobot_hadiah_max}\n"
-        result_text += "Sekuens: " + ' '.join(cari_sequences) + "\n"
-        result_text += "Koordinat:\n" + '\n'.join(map(str, cari_coordinates)) + "\n"
-        result_text += f"Waktu eksekusi: {execution_time*1000} ms"
-        self.label_output.config(text=result_text)
+        for i in range((no_of_sequences)):
+            sequence = sequences[i]
+            print(sequence)
+            print("Hadiah: ", sequence_rewards[i])
+            
+        print("Bobot Hadiah:", max_reward)
+        print("Sekuens: ", cari_sequences[index-1])
+        print("Koordinat: ", cari_coordinates[index-1])
+        print("Execution Time: ", execution_time*1000, "ms")
+        
+        self.result(matrix, cari_sequences, cari_coordinates, max_reward, index, execution_time)
+        
+        return matrix, cari_sequences, cari_coordinates, max_reward, index, execution_time
 
-        # Display matrix layout with highlighted coordinates
-        matrix_layout = tk.LabelFrame(self.root, text="Matrix")
-        matrix_layout.grid(row=5, column=0, columnspan=3, padx=10, pady=10, sticky="we")
+    def result(self, matrix, cari_sequences, cari_coordinates, max_reward, index, execution_time, event=None):
+        self.canvas.delete("all")
 
-        frame = tk.Frame(matrix_layout)
-        frame.grid(row=0, column=0, sticky="nsew")
+        background_img = Image.open("src/assets/resultbg.png")
+        background_img = background_img.resize((1500, 810))
+        self.background_photo = ImageTk.PhotoImage(background_img)
+        self.canvas.create_image(0, 0, image=self.background_photo, anchor="nw")
 
-        canvas = tk.Canvas(frame, width=400, height=300)  # Adjust dimensions as needed
-        canvas.grid(row=0, column=0, sticky="nsew")
+        header_img = Image.open("src/assets/result_header.png")
+        header_img = header_img.resize((1435, 260))
+        self.header_photo = ImageTk.PhotoImage(header_img)
+        self.canvas.create_image(0, 10, image=self.header_photo, anchor="nw")
 
-        scrollbar = tk.Scrollbar(frame, orient="vertical", command=canvas.yview)
-        scrollbar.grid(row=0, column=1, sticky="ns")
-        canvas.config(yscrollcommand=scrollbar.set)
+        matrix_img = Image.open("src/assets/matrix.png")
+        matrix_img = matrix_img.resize((600, 530))
+        self.matrix_photo = ImageTk.PhotoImage(matrix_img)
+        self.canvas.create_image(40, 210, image=self.matrix_photo, anchor="nw")
 
-        # Display matrix cells
+        cell_width = 230 / len(matrix[0])
+        cell_height = 230 / len(matrix)
         for i in range(len(matrix)):
             for j in range(len(matrix[0])):
-                cell_text = matrix[i][j]
-                label = tk.Label(canvas, text=cell_text, padx=10, pady=10, borderwidth=1, relief="solid")
-                label.grid(row=i, column=j)
+                x0 = 150 + j * cell_width
+                y0 = 350 + i * cell_height
+                x1 = x0 + cell_width
+                y1 = y0 + cell_height
+                self.canvas.create_rectangle(x0, y0, x1, y1, fill="white", outline="black")
+                self.canvas.create_text((x0 + x1) / 2, (y0 + y1) / 2, text=str(matrix[i][j]))
 
-        # Highlight coordinates
-        for coord in cari_coordinates:
-            x, y = coord
-            x -= 1  # Adjust to 0-based indexing
-            y -= 1
-            cell = canvas.grid_slaves(row=y, column=x)[0]
-            cell.config(bg="pink")
+        seq_result_img = Image.open("src/assets/seq_result.png")
+        seq_result_img = seq_result_img.resize((600, 280))
+        self.seq_result_photo = ImageTk.PhotoImage(seq_result_img)
+        self.canvas.create_image(750, 180, image=self.seq_result_photo, anchor="nw")
 
-        canvas.update_idletasks()
-        canvas.config(scrollregion=canvas.bbox("all"))
+        reward_result_img = Image.open("src/assets/reward_result.png")
+        reward_result_img = reward_result_img.resize((250, 180))
+        self.reward_result_photo = ImageTk.PhotoImage(reward_result_img)
+        self.canvas.create_image(750, 470, image=self.reward_result_photo, anchor="nw")
 
+        time_result_img = Image.open("src/assets/time_result.png")
+        time_result_img = time_result_img.resize((250, 180))
+        self.time_result_photo = ImageTk.PhotoImage(time_result_img)
+        self.canvas.create_image(1080, 470, image=self.time_result_photo, anchor="nw")
 
+        x_offset, y_offset = 1, 1 
+        self.canvas.create_text(920 + x_offset, 380 + y_offset, text=cari_sequences[index-1], font=("Arial", 22), fill="#FFD11A")
+        self.canvas.create_text(920, 380, text=cari_sequences[index-1], font=("Arial", 22), fill="#2C75D4")
 
-    def create_widgets(self):
-        self.label_intro = tk.Label(self.root, text="Welcome to Cyberpunk 2077 Breach Protocol Solver", font=("Helvetica", 16))
-        self.label_intro.grid(row=0, column=0, columnspan=2, padx=10, pady=10)
-        
-        self.label_input_type = tk.Label(self.root, text="Input Type:")
-        self.label_input_type.grid(row=1, column=0, padx=10, pady=5, sticky="w")
-        
-        self.input_type = tk.StringVar()
-        self.input_type.set("file")
-        self.radio_file = tk.Radiobutton(self.root, text="File (.txt)", variable=self.input_type, value="file", command=self.toggle_widgets)
-        self.radio_file.grid(row=1, column=1, padx=10, pady=5, sticky="w")
-        self.radio_keyboard = tk.Radiobutton(self.root, text="Keyboard", variable=self.input_type, value="keyboard", command=self.toggle_widgets)
-        self.radio_keyboard.grid(row=1, column=2, padx=10, pady=5, sticky="w")
-        
-        # Input Section
-        self.input_frame = tk.LabelFrame(self.root, text="Input Data")
-        self.input_frame.grid(row=2, column=0, columnspan=3, padx=10, pady=10, sticky="we")
+        self.canvas.create_text(870 + x_offset, 590 + y_offset, text=max_reward, font=("Arial", 22), fill="#FFD11A")
+        self.canvas.create_text(870, 590, text=max_reward, font=("Arial", 22), fill="#2C75D4")
 
-        self.widgets_for_keyboard_input = []
-        self.labels = ["Unique Tokens:", "Tokens (Separated by space):", "Buffer Size:", "Matrix Size (Width x Height):", "Number of Sequences:", "Max Tokens per Sequence:"]
-        for i, label_text in enumerate(self.labels):
-            label = tk.Label(self.input_frame, text=label_text)
-            label.grid(row=i, column=0, padx=10, pady=5, sticky="w")
-            entry = tk.Entry(self.input_frame)
-            entry.grid(row=i, column=1, columnspan=2, padx=10, pady=5, sticky="we")
-            self.widgets_for_keyboard_input.append(entry)
+        self.canvas.create_text(1200 + x_offset, 580 + y_offset, text=(round(execution_time*1000)), font=("Arial", 22), fill="#FFD11A")
+        self.canvas.create_text(1200, 580, text=(round(execution_time*1000)), font=("Arial", 22), fill="#2C75D4")
 
-        # Solve Button
-        self.button_solve = tk.Button(self.root, text="Solve", command=self.solve)
-        self.button_solve.grid(row=3, column=0, columnspan=3, padx=10, pady=10, sticky="we")
+        self.canvas.create_text(1200 + x_offset, 600 + y_offset, text="ms", font=("Arial", 22), fill="#FFD11A")
+        self.canvas.create_text(1200, 600, text="ms", font=("Arial", 22), fill="#2C75D4")
 
-        # Output Section
-        self.output_frame = tk.LabelFrame(self.root, text="Output")
-        self.output_frame.grid(row=4, column=0, columnspan=3, padx=10, pady=10, sticky="we")
+        save_img = Image.open("src/assets/save.png")
+        save_img = save_img.resize((300, 50))
+        self.save_photo = ImageTk.PhotoImage(save_img)
+        self.save_image = self.canvas.create_image(890, 680, image=self.save_photo, anchor="nw")
+        self.canvas.tag_bind(self.save_image, "<Button-3>", self.save_input_clicked(matrix, cari_sequences, cari_coordinates, max_reward, index, execution_time))
+    
+    
+    def save_input_clicked(self, matrix, cari_sequences, cari_coordinates, max_reward, index, execution_time, event=None):
+        file_path = filedialog.asksaveasfilename(defaultextension=".txt", filetypes=[("Text files", "*.txt")])
+        print(file_path)
+        if file_path:
+            if max_reward != 0:
+                with open(file_path, 'w') as file:
+                    file.write("#**** Cyberpunk 2077 Breach Protocol Solution ****# \n")
+                    file.write("Bobot Hadiah: " + str(max_reward) + '\n')
+                    file.write("Sekuens: ")
+                    for token in cari_sequences[index-1]:
+                        file.write(token + ' ')
+                    file.write('\n')
+                    file.write("Koordinat: \n")
+                    for coordinates in cari_coordinates[index-1]:
+                        file.write(str(coordinates) + '\n')
+                    file.write("Waktu eksekusi: " + str(execution_time*1000) + " ms\n")
+                    file.write("#*************************************************# \n")
+            else:
+                with open(file_path, 'w') as file:
+                    file.write("#**** Cyberpunk 2077 Breach Protocol Solution ****# \n")
+                    file.write("Bobot Hadiah: " + str(max_reward) + '\n')
+                    file.write("Tidak ada sekuens yang memenuhi. \n")
+                    file.write("Waktu eksekusi: " + str(execution_time*1000) + " ms\n")
+                    file.write("#*************************************************# \n")
+            print("File saved successfully:", file_path)
+        else:
+            print("Save operation cancelled.")
+    
+            
+    def file_input_clicked(self, event=None):
+        file_path = filedialog.askopenfilename()
+        if file_path:
+            file_name = os.path.basename(file_path)
+            print("File selected:", file_name)
+            with open(file_name, 'r') as file:
+                buffer_size = int(file.readline().strip())
+                matrix_width, matrix_height = map(int, file.readline().split())
+                matrix = [list(file.readline().split()) for _ in range(matrix_height)]
+                number_of_sequences = int(file.readline().strip())
+                sequences = []
+                sequence_rewards = []
 
-        self.label_output = tk.Label(self.output_frame, text="")
-        self.label_output.grid(row=0, column=0, padx=10, pady=5, sticky="w")
-
-        # Toggle Widgets
-        self.toggle_widgets()
-
-    def toggle_widgets(self):
-        # Hide input data widgets by default
-        self.input_frame.grid_remove()
-
-        # Show input data widgets if "Keyboard" radio button is selected
-        if self.input_type.get() == "keyboard":
-            self.input_frame.grid(row=2, column=0, columnspan=3, padx=10, pady=10, sticky="we")
-
-
-    def solve_from_keyboard(self):
-        try:
-            # Gather inputs
-            jumlah_token_unik = int(self.widgets_for_keyboard_input[0].get())
-            tokens = self.widgets_for_keyboard_input[1].get().split()
-            buffer_size = int(self.widgets_for_keyboard_input[2].get())
-            matrix_size_str = self.widgets_for_keyboard_input[3].get().split("x")
-            matrix_width = int(matrix_size_str[0].strip())
-            matrix_height = int(matrix_size_str[1].strip())
-            number_of_sequences = int(self.widgets_for_keyboard_input[4].get())
-            sequence_max = int(self.widgets_for_keyboard_input[5].get())
-
-            # Randomize matrix elements
-            matrix = [['' for _ in range(matrix_width)] for _ in range(matrix_height)]
-            for j in range(matrix_height):
-                for k in range(matrix_width):
-                    matrix[j][k] = random.choice(tokens)
-
-            sequences = []
-            sequence_rewards = []
-            for _ in range(number_of_sequences):
-                # Randomize sequence elements
-                sequence = random.sample(tokens, min(sequence_max, len(tokens)))
-                sequences.append(sequence)
-                sequence_rewards.append(random.randint(8, 80))
-
-            # Find all sequences in the matrix
-            start_time = time.time()
-            all_sequences, all_coordinates = self.all_sequences(matrix, buffer_size)
-
-            # Calculate rewards for each sequence
-            total_rewards = self.hadiah(all_sequences, sequences, sequence_rewards)
-
-            # Find the sequence with the maximum total reward
-            max_reward_index = total_rewards.index(max(total_rewards))
-            execution_time = time.time() - start_time
-
-            # Display the optimal sequence along with its coordinates and total reward
-            result_text = f"Bobot Hadiah: {total_rewards[max_reward_index]}\n"
-            result_text += f"Sekuens: {' '.join(all_sequences[max_reward_index])}\n"
-            result_text += "Koordinat:\n"
-            coordinates = all_coordinates[max_reward_index]
-            for coord in coordinates:
-                result_text += f"{coord}\n"
-            result_text += f"Waktu eksekusi: {execution_time*1000} ms"
-
-            self.label_output.config(text=result_text)
-
-            # Display matrix layout with highlighted coordinates
-            matrix_layout = tk.LabelFrame(self.root, text="Matrix")
-            matrix_layout.grid(row=5, column=0, columnspan=3, padx=10, pady=10, sticky="we")
-
-            frame = tk.Frame(matrix_layout)
-            frame.grid(row=0, column=0, sticky="nsew")
-
-            canvas = tk.Canvas(frame)  # Remove width and height parameters
-            canvas.grid(row=0, column=0, sticky="nsew")
-
-            # Add a frame to contain the matrix cells
-            inner_frame = tk.Frame(canvas)
-            canvas.create_window((0, 0), window=inner_frame, anchor="nw")
-
-            # Display matrix cells
-            for i in range(len(matrix)):
-                for j in range(len(matrix[0])):
-                    cell_text = matrix[i][j]
-                    label = tk.Label(inner_frame, text=cell_text, padx=10, pady=10, borderwidth=1, relief="solid")
-                    label.grid(row=i, column=j)
-
-            # Highlight coordinates
-            for coord in coordinates:
-                x, y = coord
-                x -= 1  # Adjust to 0-based indexing
-                y -= 1
-                cell = inner_frame.grid_slaves(row=y, column=x)[0]
-                cell.config(bg="pink")
-
-
-            # Add scrollbar
-            scrollbar = tk.Scrollbar(frame, orient="vertical", command=canvas.yview)
-            scrollbar.grid(row=0, column=1, sticky="ns")
-            canvas.config(yscrollcommand=scrollbar.set)
-
-            # Update the scroll region
-            inner_frame.update_idletasks()
-            canvas.config(scrollregion=canvas.bbox("all"))
+                for _ in range(number_of_sequences):
+                    sequences.append(file.readline().split())
+                    sequence_rewards.append(int(file.readline().strip()))
                 
-        except Exception as e:
-            messagebox.showerror("Error", f"An error occurred: {e}")
+                GUI.calculate(self, buffer_size, matrix_width, matrix_height, matrix, number_of_sequences, sequences, sequence_rewards)
+       
+        else:
+            print("No file selected.")
 
+    def keyboard_input_clicked(self, event=None):
+        no_of_tokens = simpledialog.askstring("Input", "Jumlah token unik:")
+        
+        tokens = simpledialog.askstring("Input", "Token (ex: AA BB CC):")
+        tokens = tokens.split()
 
-def main():
-    root = tk.Tk()
-    app = BreachProtocolSolverApp(root)
-    root.mainloop()
+        buffer_value = simpledialog.askstring("Input", "Ukuran buffer:")
+        buffer_value = int(buffer_value)
+
+        matrix_size = simpledialog.askstring("Input", "Ukuran matriks:")
+        col_mtx, row_mtx = matrix_size.split()
+        matrix_width = int(row_mtx)
+        matrix_height = int(col_mtx)
+
+        matrix = [['' for i in range(matrix_width)] for j in range(matrix_height)]
+        for j in range (matrix_height):
+            for k in range (matrix_width):
+                matrix[j][k] = random.choice(tokens)
+        
+        no_of_sequences = simpledialog.askstring("Input", "Jumlah sekuens:")
+        no_of_sequences = int(no_of_sequences)
+
+        max_tokens_per_sequences = simpledialog.askstring("Input", "Ukuran maksimal sekuens:")
+        max_tokens_per_sequences = int(max_tokens_per_sequences)
+
+        sequences = []
+        for a in range(int(no_of_sequences)):
+            ukuran = random.randint(2, int(max_tokens_per_sequences))
+            sequence = []
+            for b in range(ukuran):
+                sequence.append(random.choice(tokens))
+            sequences.append(sequence)
+        
+        sequence_rewards = []
+        for c in range(int(no_of_sequences)):
+            sequence_rewards.append(random.randint(8, 80))
+        
+        GUI.calculate(self, buffer_value, matrix_width, matrix_height, matrix, no_of_sequences, sequences, sequence_rewards)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        self.title("Cyberpunk 2077 Breach Protocol Solver")
+        
+        self.geometry("2560x1600")
+        
+        self.canvas = tk.Canvas(self, width=2560, height=1600)
+        self.canvas.pack(fill=tk.BOTH, expand=True)
+        
+        background_img = Image.open("src/assets/homebg.png")
+        background_img = background_img.resize((1500, 810))
+        self.background_photo = ImageTk.PhotoImage(background_img)
+        self.canvas.create_image(0, 0, image=self.background_photo, anchor="nw")
+        
+        header_img = Image.open("src/assets/header.png")
+        header_img = header_img.resize((1435, 325))
+        self.header_photo = ImageTk.PhotoImage(header_img)
+        self.canvas.create_image(0, 100, image=self.header_photo, anchor="nw")
+        
+        file_img = Image.open("src/assets/fileinput.png")
+        file_img = file_img.resize((280, 130))
+        self.file_photo = ImageTk.PhotoImage(file_img)
+        self.file_image = self.canvas.create_image(350, 500, image=self.file_photo, anchor="nw")
+        self.canvas.tag_bind(self.file_image, "<Button-1>", self.file_input_clicked)
+
+        keyboard_img = Image.open("src/assets/keyboardinput.png")
+        keyboard_img = keyboard_img.resize((280, 130))
+        self.keyboard_photo = ImageTk.PhotoImage(keyboard_img)
+        self.keyboard_image = self.canvas.create_image(800, 500, image=self.keyboard_photo, anchor="nw")
+        self.canvas.tag_bind(self.keyboard_image, "<Button-1>", self.keyboard_input_clicked)
 
 if __name__ == "__main__":
-    main()
+    app = GUI()
+    app.mainloop()
