@@ -79,7 +79,7 @@ def write_ada_solusi(index, cari_sequences, cari_coordinates, bobot_hadiah_max, 
         file.write("Koordinat: \n")
         for coordinates in cari_coordinates[index-1]:
             file.write(str(coordinates) + '\n')
-        file.write("Waktu eksekusi: " + str(execution_time) + " ms")
+        file.write("Waktu eksekusi: " + str(execution_time) + " ms\n")
         file.write("#*************************************************# \n")
     return filename
 
@@ -90,6 +90,6 @@ def write_no_solusi(bobot_hadiah_max, execution_time):
         file.write("#**** Cyberpunk 2077 Breach Protocol Solution ****# \n")
         file.write("Bobot Hadiah: " + str(bobot_hadiah_max) + '\n')
         file.write("Tidak ada sekuens yang memenuhi. \n")
-        file.write("Waktu eksekusi: " + str(execution_time) + " ms")
+        file.write("Waktu eksekusi: " + str(execution_time) + " ms\n")
         file.write("#*************************************************# \n")
     return filename
