@@ -1,8 +1,17 @@
-import random
+import random, os
 
 #*** read file txt ***#
 def read_file(filename):
-    with open(filename, 'r') as file:
+    relative_path = ""
+    
+    current_directory = os.getcwd()
+    parent_directory = os.path.dirname(os.path.dirname(current_directory))
+
+    full_path = os.path.join(parent_directory, relative_path, filename)
+    
+    print(full_path)
+
+    with open(full_path, 'r') as file:
         buffer_size = int(file.readline().strip())
         matrix_width, matrix_height = map(int, file.readline().split())
         matrix = [list(file.readline().split()) for _ in range(matrix_height)]
