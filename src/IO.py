@@ -78,7 +78,17 @@ def write_array(sequences, filename):
 #*** write file solusi ketika bobot hadiah != 0 ***#
 def write_ada_solusi(index, cari_sequences, cari_coordinates, bobot_hadiah_max, execution_time):
     filename = input("Masukkan nama file solusi: ")
-    with open('test/' + filename + '.txt', 'w') as file:
+    relative_path = "/test/"
+    
+    current_directory = os.getcwd()
+    print(current_directory)
+    parent_directory = os.path.dirname(os.path.dirname(current_directory))
+    print(parent_directory)
+    full_path = parent_directory + relative_path + filename
+    
+    print(full_path)
+
+    with open(full_path, 'w') as file:
         file.write("#**** Cyberpunk 2077 Breach Protocol Solution ****# \n")
         file.write("Bobot Hadiah: " + str(bobot_hadiah_max) + '\n')
         file.write("Sekuens: ")
